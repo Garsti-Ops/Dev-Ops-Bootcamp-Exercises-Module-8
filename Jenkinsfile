@@ -5,6 +5,7 @@ pipeline {
     stages {
         stage("Increment Version") {
             sh 'docker --version'
+            sh ''
         }
         stage("Tests") {
 
