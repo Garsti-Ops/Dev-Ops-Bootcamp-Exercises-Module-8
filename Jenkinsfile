@@ -4,8 +4,10 @@ pipeline {
     }
     stages {
         stage("Increment Version") {
-            sh 'docker --version'
-            sh ''
+            steps {
+                sh 'docker --version'
+                sh ''
+            }
         }
         stage("Tests") {
 
