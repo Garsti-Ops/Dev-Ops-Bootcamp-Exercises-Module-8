@@ -4,21 +4,23 @@ pipeline {
     }
     stages {
         stage("Increment Version") {
-            script {
-                // Read Version from build.gradle
-                def matcher = readFile('package.json') =~ '"version": "(.+)"'
-                def version = matcher[0][1]
-                def splitVersion = version.split("\\.")
+            steps {
+                script {
+                    // Read Version from build.gradle
+                    def matcher = readFile('package.json') =~ '"version": "(.+)"'
+                    def version = matcher[0][1]
+                    def splitVersion = version.split("\\.")
 
-                // Increment Patchversion
-                int patchVersion = Integer.valueOf(splitVersion[2])
-                patchVersion++
+                    // Increment Patchversion
+                    int patchVersion = Integer.valueOf(splitVersion[2])
+                    patchVersion++
 
-                // Update Version
-                def incrementedVersion = splitVersion[0] + "." + splitVersion[1] + "." + patchVersion
-                $VERSION = incrementedVersion
-                echo incrementedVersion
-                //def buildGradle = new File("")
+                    // Update Version
+                    def incrementedVersion = splitVersion[0] + "." + splitVersion[1] + "." + patchVersion
+                    $VERSION = incrementedVersion
+                    echo incrementedVersion
+                    //def buildGradle = new File("")
+                }
             }
 
         }
