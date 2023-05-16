@@ -24,7 +24,7 @@ pipeline {
         }
         stage("Tests") {
             steps {
-                sh 'npm run test'
+                sh 'cd ./app && npm run test'
             }
 
         }
