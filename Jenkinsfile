@@ -17,7 +17,9 @@ pipeline {
                     def incrementedVersion = splitVersion[0] + "." + splitVersion[1] + "." + patchVersion
                     $VERSION = incrementedVersion
                     echo incrementedVersion
-                    //def buildGradle = new File("")
+                    withAnt(installation: 'ant-1.10.13') {
+                        ant.replaceregexp(file: './app/package.json', match: '"version": "(.+)"', value: '"version": "$incrementedVersion"')
+                    }
                 }
             }
 
