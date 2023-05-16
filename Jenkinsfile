@@ -5,7 +5,7 @@ pipeline {
             steps {
                 script {
                     // Read Version from build.gradle
-                    def matcher = readFile('package.json') =~ '"version": "(.+)"'
+                    def matcher = readFile('./app/package.json') =~ '"version": "(.+)"'
                     def version = matcher[0][1]
                     def splitVersion = version.split("\\.")
 
