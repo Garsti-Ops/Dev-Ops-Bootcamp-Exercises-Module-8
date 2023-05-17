@@ -10,7 +10,7 @@ pipeline {
                     def splitVersion = version.split("\\.")
 
                     // Increment Patchversion
-                    int patchVersion = Integer.valueOf(splitVersion[2])
+                    def patchVersion = Integer.valueOf(splitVersion[2])
                     patchVersion++
 
                     // Update Version
