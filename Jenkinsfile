@@ -4,21 +4,14 @@ pipeline {
         stage("Increment Version") {
             steps {
                 script {
-                    // Read Version from build.gradle
-                    def matcher = readFile('./app/package.json') =~ '"version": "(.+)"'
-                    def version = matcher[0][1]
-                    def splitVersion = version.split("\\.")
+                    dir("app") {
+                        npm version minor
 
-                    // Increment Patchversion
-                    def patchVersion = Integer.valueOf(splitVersion[2])
-                    patchVersion++
+                        def packageJson = readJSON file: 'package.json'
+                        def version = packageJson.version
 
-                    // Update Version
-                    def incrementedVersion = splitVersion[0] + "." + splitVersion[1] + "." + patchVersion
-                    $VERSION = incrementedVersion
+                        env.NEW_VERSION = "$version-$BUILD_NUMBER"
 
-                    withAnt(installation: 'ant-1.10.13') {
-                        ant.replaceregexp(file: './app/package.json', match: '"version": "${splitVersion[0] + "." + splitVersion[1] + splitVersion[2]}"', value: '"version": "${incrementedVersion}"')
                     }
                 }
             }
@@ -26,13 +19,15 @@ pipeline {
         }
         stage("Tests") {
             steps {
-                sh 'cd ./app && npm run test'
+                dir("app") {
+                    sh 'npm install && npm run test'
+                }
             }
 
         }
         /*stage("Build Docker Image and push to Repository") {
             steps {
-                sh 'docker build . -t garstiops/garstiges-secret-repo:node-app-$VERSION'
+                sh 'docker build . -t garstiops/garstiges-secret-repo:node-app-$NEW_VERSION'
             }
         }*/
     }
