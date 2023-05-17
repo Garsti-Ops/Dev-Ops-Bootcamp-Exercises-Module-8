@@ -18,7 +18,7 @@ pipeline {
                     $VERSION = incrementedVersion
                     echo incrementedVersion
                     withAnt(installation: 'ant-1.10.13') {
-                        ant.replaceregexp(file: './app/package.json', match: '"version": "(.+)"', value: '"version": "$incrementedVersion"')
+                        ant.replaceregexp(file: './app/package.json', match: '"version": "(.+)"', value: '"version": "${incrementedVersion}"')
                     }
                 }
             }
