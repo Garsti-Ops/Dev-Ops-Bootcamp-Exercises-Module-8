@@ -17,11 +17,9 @@ pipeline {
                     def incrementedVersion = splitVersion[0] + "." + splitVersion[1] + "." + patchVersion
                     $VERSION = incrementedVersion
 
-                    def fileContent = new File('./app/package.json')
-                    fileContent.replaceAll('"version": "${splitVersion[0] + "." + splitVersion[1] + splitVersion[2]}"')
-//                    withAnt(installation: 'ant-1.10.13') {
-//                        ant.replaceregexp(file: './app/package.json', match: '"version": "(.+)"', value: '"version": "${incrementedVersion}"')
-//                    }
+                    withAnt(installation: 'ant-1.10.13') {
+                        ant.replaceregexp(file: './app/package.json', match: '"version": "${splitVersion[0] + "." + splitVersion[1] + splitVersion[2]}"', value: '"version": "${incrementedVersion}"')
+                    }
                 }
             }
 
