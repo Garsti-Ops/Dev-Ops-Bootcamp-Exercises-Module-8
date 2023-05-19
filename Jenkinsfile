@@ -24,11 +24,15 @@ pipeline {
             }
 
         }
-        /*stage("Build Docker Image and push to Repository") {
+        stage("Build Docker Image and push to Repository") {
             steps {
-                sh 'docker build . -t garstiops/garstiges-secret-repo:node-app-$NEW_VERSION'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: USERNAME, passwordVariable: PASSWORD)]) {
+                    sh 'docker build . -t garstiops/garstiges-secret-repo:node-app-$NEW_VERSION'
+                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                    sh 'docker push garstiops/garstiges-secret-repo:node-app-$NEW_VERSION'
+                }
             }
-        }*/
+        }
     }
 
 }
