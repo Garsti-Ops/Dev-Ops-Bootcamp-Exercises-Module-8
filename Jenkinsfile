@@ -7,7 +7,7 @@ pipeline {
                     dir("app") {
                         sh 'npm version minor'
 
-                        def packageJson = JSON.parse('package.json')
+                        def packageJson = readJSON file: 'package.json'
                         def version = packageJson.version
 
                         env.NEW_VERSION = "$version-$BUILD_NUMBER"
