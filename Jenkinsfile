@@ -26,9 +26,9 @@ pipeline {
         }
         stage("Build Docker Image and push to Repository") {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: USERNAME, passwordVariable: PASSWORD)]) {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: UNAME, passwordVariable: PASSWORD)]) {
                     sh 'docker build . -t garstiops/garstiges-secret-repo:node-app-$NEW_VERSION'
-                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                    sh 'echo $PASSWORD | docker login -u $UNAME --password-stdin'
                     sh 'docker push garstiops/garstiges-secret-repo:node-app-$NEW_VERSION'
                 }
             }
