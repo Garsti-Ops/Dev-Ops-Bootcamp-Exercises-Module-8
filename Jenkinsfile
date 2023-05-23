@@ -42,7 +42,7 @@ pipeline {
                     sh "git remote set-url origin https://${UNAME}:${PASSWORD}@github.com/Garsti-Ops/Dev-Ops-Bootcamp-Exercises-Module-8.git"
                     sh 'git add .'
                     sh 'git commit -m "ci: version increment"'
-                    sh 'git push'
+                    sh 'git push origin HEAD:${BRANCH_NAME}'
                 }
 
             }
