@@ -35,7 +35,7 @@ pipeline {
         }
         stage("Commit Version increment") {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'UNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'github-cli', usernameVariable: 'UNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'git config --global user.email "jenkins@example.com"'
                     sh 'git config --global user.name "jenkins"'
 
