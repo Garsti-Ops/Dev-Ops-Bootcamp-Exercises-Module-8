@@ -7,7 +7,7 @@ pipeline {
             steps {
                 script {
                     dir("app") {
-                        inreaseVersion env
+                        inreaseVersion(env)
                     }
                 }
             }
