@@ -23,16 +23,19 @@ pipeline {
         }
         stage("Build Docker Image and push to Repository") {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'UNAME', passwordVariable: 'PASSWORD')]) {
-                    buildAndPushImage UNAME PASSWORD NEW_VERSION
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'UNAME', passwordVariable: 'PASSWORD')]) {
+                        buildAndPushImage UNAME PASSWORD NEW_VERSION
+                    }
                 }
             }
             stage("Commit Version increment") {
                 steps {
-                    withCredentials([usernamePassword(credentialsId: 'github-cli', usernameVariable: 'UNAME', passwordVariable: 'PASSWORD')]) {
-                        commitVersionIncrease UNAME PASSWORD BRANCH_NAME
+                    script {
+                        withCredentials([usernamePassword(credentialsId: 'github-cli', usernameVariable: 'UNAME', passwordVariable: 'PASSWORD')]) {
+                            commitVersionIncrease UNAME PASSWORD BRANCH_NAME
+                        }
                     }
-
                 }
             }
         }
